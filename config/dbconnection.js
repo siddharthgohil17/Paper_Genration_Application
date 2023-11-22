@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 const databaseName = "QuenstionBank";
-const url = `mongodb+srv://admin-sid:4321@cluster0.odxca98.mongodb.net/${databaseName}?retryWrites=true&w=majority`;
+const url = process.env.MONGO_URL;
+
 
 const startTime = process.hrtime(); // Start the timer
 
