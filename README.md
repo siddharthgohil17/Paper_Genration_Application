@@ -1,11 +1,13 @@
-                                     <h1> Paper_Genration_Application</h1>
+# Paper Generation Application
 
+This is the backend code for an automatic paper generation application. Users can easily create papers by providing the total marks, specifying the percentage of easy, medium, and hard level questions, and choosing a specific topic for a particular subject.
 
-<h2>It's backend code for the automatic paper generation. Users only need to add the total marks of the paper and enter the percentage of easy, medium, and hard level questions. You can also choose a specific topic for a particular subject</h2>
+## Getting Started
 
+To start the application, follow these steps:
 
-<h1>To start Application follow this command;</h1>
-  1)git clone
-  2)npm install 
-  3)npm start
-  
+1. **Clone the Repository:**
+  1) git clone <repository-url>
+  2) npm install
+  3) npm start
+
