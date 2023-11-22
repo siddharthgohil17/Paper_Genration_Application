@@ -55,7 +55,7 @@ class PaperGenerator {
   static fetchQuestions = async (difficulty, topic, marks) => {
     const query = subject.find({ difficulty, ...(topic && { topic: topic }) });
 
-    const cursor =  query;
+    const cursor = await query;
     const questionsArray = await cursor.toArray();
 
     const limitfive = Math.floor(marks / 5);
