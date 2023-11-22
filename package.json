@@ -6,9 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server/app.js",    
+    "start": "nodemon server/app.js",
     "build": "echo \"No build step required\""
-
   },
   "author": "sid",
   "license": "ISC",
@@ -17,5 +16,8 @@
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
     "mongoose": "^8.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
