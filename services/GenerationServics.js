@@ -14,7 +14,11 @@ class PaperGenerator {
         mediumPercentage % 1 !== 0 ||
         hardPercentage % 1 !== 0
       ) {
-        res.status(400).send('Percentage values cannot be fractions.');
+        const errorMessage = `Percentage values must be whole numbers. Please provide integer values for easy, medium, and hard percentages. Current calculated values are: 
+        Easy: ${easyPercentage}, 
+        Medium: ${mediumPercentage}, 
+        Hard: ${hardPercentage}.`;
+      res.status(400).send(errorMessage);
         return; 
       }
 
