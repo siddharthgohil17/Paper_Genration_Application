@@ -1,22 +1,20 @@
-import express from "express"
+import express from "express";
 import PaperGenerator from "../services/GenerationServics.js";
-import {db} from "../config/dbconnection.js";
+import { db } from "../config/dbconnection.js";
 
+const PORT = process.env.PORT || 3000; 
+const app = express();
 
-const port = 3000;
-const app=express();
-app.use(express.json()); 
+app.use(express.json());
 
+app.get('/generatepaper', PaperGenerator.generatePaper);
 
-app.get('/generatepaper',PaperGenerator.generatePaper);
-
-
-//checking sever on or down
-app.get('/',(req,res)=>{
+// Checking if the server is up or down
+app.get('/', (req, res) => {
     res.send("HELLO");
-})
+});
 
-//connect with server
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-  });
+// Connect with the server
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
