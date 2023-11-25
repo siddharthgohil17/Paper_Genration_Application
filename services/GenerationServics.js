@@ -11,7 +11,7 @@ class PaperGenerator {
       
 
       // Check if the sum of percentages matches the specified total marks
-      console.log( easyPercentage,mediumPercentage,hardPercentage)
+    
       if ((easyPercentage + mediumPercentage + hardPercentage) != marks) {
         return res.status(400).send("Your percentages do not match the specified total marks. Please check.");
       }
