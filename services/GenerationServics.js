@@ -5,21 +5,23 @@ class PaperGenerator {
   static generatePaper = async (req, res) => {
     try {
       const { marks, easy, medium, hard, topic } = req.query;
-      const easyPercentage = (parseFloat(easy) / 100) * marks;
-      const mediumPercentage = (parseFloat(medium) / 100) * marks;
-      const hardPercentage = (parseFloat(hard) / 100) * marks;
+      let easyPercentage = parseFloat(((parseFloat(easy) / 100) * marks).toFixed(3));
+      let mediumPercentage = parseFloat(((parseFloat(medium) / 100) * marks).toFixed(3));
+      let hardPercentage = parseFloat(((parseFloat(hard) / 100) * marks).toFixed(3));
+      
 
-      if (
-        easyPercentage % 1 !== 0 ||
-        mediumPercentage % 1 !== 0 ||
-        hardPercentage % 1 !== 0
-      ) {
-        const errorMessage = `Percentage values must be whole numbers. Please provide integer values for easy, medium, and hard percentages. Current calculated values are: 
-        Easy: ${easyPercentage}, 
-        Medium: ${mediumPercentage}, 
-        Hard: ${hardPercentage}.`;
-      res.status(400).send(errorMessage);
-        return; 
+      // Check if the sum of percentages matches the specified total marks
+      console.log( easyPercentage,mediumPercentage,hardPercentage)
+      if ((easyPercentage + mediumPercentage + hardPercentage) != marks) {
+        return res.status(400).send("Your percentages do not match the specified total marks. Please check.");
+      }
+
+      // Check if any percentage is a fraction and adjust if needed
+      if (!Number.isInteger(easyPercentage) || !Number.isInteger(mediumPercentage) || !Number.isInteger(hardPercentage)) {
+        const adjustedMarks = PaperGenerator.adjustFractionPercentage(easyPercentage, mediumPercentage, hardPercentage, marks);
+        easyPercentage = adjustedMarks.easy;
+        mediumPercentage = adjustedMarks.medium;
+        hardPercentage = adjustedMarks.hard;
       }
 
       // Fetch questions in parallel
@@ -48,6 +50,15 @@ class PaperGenerator {
     }
   };
 
+  static adjustFractionPercentage = (easyPercentage, mediumPercentage, hardPercentage, marks) => {
+    // Round up each percentage to the nearest whole number
+    const roundedEasyPercentage = Math.ceil(easyPercentage);
+    const roundedMediumPercentage = Math.ceil(mediumPercentage);
+    const roundedHardPercentage = marks - roundedEasyPercentage - roundedMediumPercentage;
+
+    return { easy: roundedEasyPercentage, medium: roundedMediumPercentage, hard: roundedHardPercentage };
+  };
+
   static calculateQuestionsCount = (marks, easy, medium, hard, marksPerQuestion) => {
     return {
       easyQuestionsCount: Math.floor((marks * easy) / marksPerQuestion.easy),
@@ -74,8 +85,7 @@ class PaperGenerator {
 
     // Check if there are enough questions to fulfill the conditions
     if ((marks - 5 * limitfive - 3 * limitthree - limitone) !== 0) {
-      res.status(400).send('Not enough questions to fulfill the conditions.');
-      return; // Return to avoid further execution
+      throw new Error('Not enough questions to fulfill the conditions.');
     }
 
     return interleavedQuestions;

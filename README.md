@@ -10,6 +10,7 @@ To start the application, follow these steps:
   1) git clone <repository-url>
   2) npm install
   3) npm start
+  4) Add environment variable.
 
 I also attached a deployed URL using this you can generate paper.
 MAIN URL: https://paper-generation-application.onrender.com
